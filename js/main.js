@@ -1,4 +1,3 @@
-// JS scripts placed here
 window.addEventListener('load', () => {
     const canvas = document.getElementById('drawingCanvas');
     const ctx = canvas.getContext('2d');

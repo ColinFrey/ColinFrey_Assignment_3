@@ -1,4 +1,3 @@
-/* Place CSS styles here */
 * { margin: 0; padding: 0; box-sizing: border-box; }
 
 body {
@@ -21,7 +20,6 @@ h1 {
     text-align: center;
     text-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
     letter-spacing: 2px;
-    
     position: absolute;
     top: -10px;
     left: 50%;
@@ -74,10 +72,12 @@ label { font-size: 14px; color: #111; font-weight: 900; letter-spacing: 0.5px; }
 
 .parallax-wrapper { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; pointer-events: none; }
 .layer { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-repeat: repeat-x; background-size: auto 100%; }
-.layer-far { background-image: url('img/far copy.png'); animation: moveBack 300s linear infinite; opacity: 0.6; }
-.layer-sand { background-image: url('img/sand copy.png'); animation: moveBack 200s linear infinite; }
-.layer-fore-1 { background-image: url('img/foreground-1 copy.png'); animation: moveBack 120s linear infinite; }
-.layer-fore-2 { background-image: url('img/foreground-2 copy.png'); animation: moveBack 80s linear infinite; }
+
+/* NOTE: Paths updated to ../img/ because main.css is inside the /css folder */
+.layer-far { background-image: url('../img/far copy.png'); animation: moveBack 300s linear infinite; opacity: 0.6; }
+.layer-sand { background-image: url('../img/sand copy.png'); animation: moveBack 200s linear infinite; }
+.layer-fore-1 { background-image: url('../img/foreground-1 copy.png'); animation: moveBack 120s linear infinite; }
+.layer-fore-2 { background-image: url('../img/foreground-2 copy.png'); animation: moveBack 80s linear infinite; }
 
 @keyframes moveBack { from { background-position: 0 0; } to { background-position: -3000px 0; } }
 
