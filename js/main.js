@@ -17,6 +17,10 @@ window.addEventListener('load', () => {
     const confirmClearBtn = document.getElementById('confirmClear');
     const cancelClearBtn = document.getElementById('cancelClear');
 
+    gsap.from(".toolbar", { duration: 1.2, x: 100, opacity: 0, ease: "elastic.out(1, 0.75)", delay: 0.2 });
+    gsap.from("h1", { duration: 1, y: -100, opacity: 0, ease: "bounce.out" });
+    gsap.from(".card", { duration: 1, scale: 0.9, opacity: 0, ease: "power2.out", delay: 0.4 });
+
     let isDrawing = false;
     let isEraser = false;
     let historyStack = [];
@@ -107,7 +111,10 @@ window.addEventListener('load', () => {
         }
     }
 
-    clearBtn.addEventListener('click', () => { confirmModal.style.display = 'flex'; });
+    clearBtn.addEventListener('click', () => { 
+        confirmModal.style.display = 'flex'; 
+        gsap.from(".modal-content", { duration: 0.4, scale: 0.7, opacity: 0, ease: "back.out(1.7)" });
+    });
     cancelClearBtn.addEventListener('click', () => { confirmModal.style.display = 'none'; });
     confirmClearBtn.addEventListener('click', () => {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
