@@ -1,6 +1,9 @@
 window.addEventListener('load', () => {
     const canvas = document.getElementById('drawingCanvas');
     const ctx = canvas.getContext('2d');
+    const sparkleCanvas = document.getElementById('sparkleCanvas');
+    const sCtx = sparkleCanvas.getContext('2d');
+    
     const colorPicker = document.getElementById('colorPicker');
     const bgColorPicker = document.getElementById('bgColorPicker');
     const bgEnabled = document.getElementById('bgEnabled');
@@ -17,6 +20,7 @@ window.addEventListener('load', () => {
     const confirmClearBtn = document.getElementById('confirmClear');
     const cancelClearBtn = document.getElementById('cancelClear');
 
+    // Intro GSAP Animations
     gsap.from(".toolbar", { duration: 1.2, x: 100, opacity: 0, ease: "elastic.out(1, 0.75)", delay: 0.2 });
     gsap.from("h1", { duration: 1, y: -100, opacity: 0, ease: "bounce.out" });
     gsap.from(".card", { duration: 1, scale: 0.9, opacity: 0, ease: "power2.out", delay: 0.4 });
@@ -25,6 +29,49 @@ window.addEventListener('load', () => {
     let isEraser = false;
     let historyStack = [];
     let redoStack = [];
+    let particles = [];
+
+    // Particle Logic for the "Charm" effect
+    class Particle {
+        constructor(x, y, color) {
+            this.x = x;
+            this.y = y;
+            this.size = Math.random() * 4 + 1;
+            this.speedX = Math.random() * 2 - 1;
+            this.speedY = Math.random() * 2 - 1;
+            this.color = color;
+            this.opacity = 1;
+        }
+        update() {
+            this.x += this.speedX;
+            this.y += this.speedY;
+            this.opacity -= 0.02; // Fades out over time
+            if (this.size > 0.1) this.size -= 0.05;
+        }
+        draw() {
+            sCtx.save();
+            sCtx.globalAlpha = this.opacity;
+            sCtx.fillStyle = this.color;
+            sCtx.beginPath();
+            sCtx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+            sCtx.fill();
+            sCtx.restore();
+        }
+    }
+
+    function animateParticles() {
+        sCtx.clearRect(0, 0, sparkleCanvas.width, sparkleCanvas.height);
+        for (let i = 0; i < particles.length; i++) {
+            particles[i].update();
+            particles[i].draw();
+            if (particles[i].opacity <= 0) {
+                particles.splice(i, 1);
+                i--;
+            }
+        }
+        requestAnimationFrame(animateParticles);
+    }
+    animateParticles();
 
     saveState();
 
@@ -101,6 +148,11 @@ window.addEventListener('load', () => {
         const pos = getMousePos(e);
         ctx.lineTo(pos.x, pos.y);
         ctx.stroke();
+
+        // Trigger particles if we are in Brush mode
+        if (!isEraser) {
+            particles.push(new Particle(pos.x, pos.y, colorPicker.value));
+        }
     }
 
     function stopDrawing() {
