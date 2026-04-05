@@ -20,7 +20,7 @@ window.addEventListener('load', () => {
     const confirmClearBtn = document.getElementById('confirmClear');
     const cancelClearBtn = document.getElementById('cancelClear');
 
-    // Intro GSAP Animations
+
     gsap.from(".toolbar", { duration: 1.2, x: 100, opacity: 0, ease: "elastic.out(1, 0.75)", delay: 0.2 });
     gsap.from("h1", { duration: 1, y: -100, opacity: 0, ease: "bounce.out" });
     gsap.from(".card", { duration: 1, scale: 0.9, opacity: 0, ease: "power2.out", delay: 0.4 });
@@ -31,7 +31,6 @@ window.addEventListener('load', () => {
     let redoStack = [];
     let particles = [];
 
-    // Particle Logic for the "Charm" effect
     class Particle {
         constructor(x, y, color) {
             this.x = x;
@@ -45,7 +44,7 @@ window.addEventListener('load', () => {
         update() {
             this.x += this.speedX;
             this.y += this.speedY;
-            this.opacity -= 0.02; // Fades out over time
+            this.opacity -= 0.02;
             if (this.size > 0.1) this.size -= 0.05;
         }
         draw() {
@@ -149,7 +148,7 @@ window.addEventListener('load', () => {
         ctx.lineTo(pos.x, pos.y);
         ctx.stroke();
 
-        // Trigger particles if we are in Brush mode
+    
         if (!isEraser) {
             particles.push(new Particle(pos.x, pos.y, colorPicker.value));
         }
